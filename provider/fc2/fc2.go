@@ -135,7 +135,7 @@ func (fc2 *FC2) GetMovieInfoByURL(rawURL string) (info *model.MovieInfo, err err
 }
 
 func ParseNumber(s string) string {
-	if ss := regexp.MustCompile(`^(?i)(?:FC2(?:[-_]?PPV)?[-_]?)?(\d+)$`).FindStringSubmatch(s); len(ss) == 2 {
+	if ss := regexp.MustCompile(`^(?i)(?:FC2(?:[-_ ]?PPV)?[-_ ]?)?(\d+).*$`).FindStringSubmatch(s); len(ss) == 2 {
 		return ss[1]
 	}
 	return ""

@@ -34,6 +34,8 @@ func TestParseNumber(t *testing.T) {
 		{"FC2_PPV738573", "738573"},
 		{"FC2PPV738573", "738573"},
 		{"FC2PPV_738573", "738573"},
+		{"FC2 PPV 738573", "738573"},
+		{"FC2 PPV 738573 ❤️長い美脚❤️", "738573"},
 	} {
 		assert.Equal(t, unit.want, ParseNumber(unit.orig), unit.orig)
 	}
