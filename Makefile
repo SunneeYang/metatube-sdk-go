@@ -11,12 +11,14 @@ BUILD_VERSION := $(shell git describe --abbrev=0 --tags HEAD | cut -d'v' -f 2)
 
 CGO_ENABLED := 0
 GO111MODULE := on
+GOPROXY	 	:= https://goproxy.io,direct
+
 
 LDFLAGS += -w -s -buildid=
 LDFLAGS += -X "$(MODULE)/internal/version.Version=$(BUILD_VERSION)"
 LDFLAGS += -X "$(MODULE)/internal/version.GitCommit=$(BUILD_COMMIT)"
 
-GO_BUILD = GO111MODULE=$(GO111MODULE) CGO_ENABLED=$(CGO_ENABLED) \
+GO_BUILD = GO111MODULE=$(GO111MODULE) CGO_ENABLED=$(CGO_ENABLED) GOPROXY=${GOPROXY} \
 	go build $(BUILD_FLAGS) -ldflags '$(LDFLAGS)' -tags '$(BUILD_TAGS)' -trimpath
 
 UNIX_ARCH_LIST = \

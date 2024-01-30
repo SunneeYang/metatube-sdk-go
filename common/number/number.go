@@ -13,6 +13,8 @@ func Trim(s string) string {
 	}
 	s = regexp.MustCompile(`(?i)([a-z\d]+\.(?:com|net|top|xyz|tv))(?:[^a-z\d]|$)`).
 		ReplaceAllString(s, "") // trim domain
+	s = regexp.MustCompile(`^(?i)\s*(FC2[-_\s]?PPV)[-_\s]`).
+		ReplaceAllString(s, "FC2-") // normalize fc2 prefixes
 	if ss := regexp.MustCompile(`(?i)([a-z\d]+(?:[-_][a-z\d]{2,})+)`).FindStringSubmatch(s); len(ss) > 0 {
 		s = ss[1] // first find number with dashes
 	} else if ss = regexp.MustCompile(`(?i)((?:[a-z]+\d|\d+[a-z])[a-z\d]+)`).FindStringSubmatch(s); len(ss) > 1 {
@@ -24,8 +26,6 @@ func Trim(s string) string {
 		ReplaceAllString(s, "") // trim tags
 	s = regexp.MustCompile(`(?i)(^|[-_\s]+)(carib(b?ean)?(com)?(pr)?|1?Pond?o?|10mu(sume)?|paco(paco)?(mama)?|mura(mura)?|Tokyo[-_\s]?Hot)([-_\s]+(?P<pattern>\d{4,}[-_]\d{2,}|[a-z]{1,4}\d{2,4})|$)`).
 		ReplaceAllString(s, "${pattern}") // trim makers
-	s = regexp.MustCompile(`^(?i)\s*(FC2[-_]?PPV)[-_]`).
-		ReplaceAllString(s, "FC2-") // normalize fc2 prefixes
 	for re := regexp.MustCompile(`(?i)([-_](c|uc|ch|cd\d{1,2})|ch|A|B|C|D)\s*$`); re.MatchString(s); {
 		s = re.ReplaceAllString(s, "") // repeatedly trim suffixes
 	}
