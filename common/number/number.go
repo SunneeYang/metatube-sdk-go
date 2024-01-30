@@ -13,13 +13,15 @@ func Trim(s string) string {
 	}
 	s = regexp.MustCompile(`(?i)([a-z\d]+\.(?:com|net|top|xyz|tv))(?:[^a-z\d]|$)`).
 		ReplaceAllString(s, "") // trim domain
-	s = regexp.MustCompile(`^(?i)\s*(FC2[-_\s]?PPV)[-_\s]`).
-		ReplaceAllString(s, "FC2-") // normalize fc2 prefixes
-	if ss := regexp.MustCompile(`(?i)([a-z\d]+(?:[-_][a-z\d]{2,})+)`).FindStringSubmatch(s); len(ss) > 0 {
+	if ss := regexp.MustCompile(`(?i)\s*(FC2[-_\s]?PPV[-_\s]\d+)`).FindStringSubmatch(s); len(ss) > 0 {
+		s = ss[1]
+	} else if ss = regexp.MustCompile(`(?i)([a-z\d]+(?:[-_][a-z\d]{2,})+)`).FindStringSubmatch(s); len(ss) > 0 {
 		s = ss[1] // first find number with dashes
 	} else if ss = regexp.MustCompile(`(?i)((?:[a-z]+\d|\d+[a-z])[a-z\d]+)`).FindStringSubmatch(s); len(ss) > 1 {
 		s = ss[1] // otherwise find number with alphas & digits
 	}
+	s = regexp.MustCompile(`(?i)^\s*(FC2[-_\s]?PPV)[-_\s]`).
+		ReplaceAllString(s, "FC2-") // normalize fc2 prefixes
 	s = regexp.MustCompile(`(?i)^(?:f?hd|sd)[-_](.*$)`).
 		ReplaceAllString(s, "${1}") // trim special prefixes
 	s = regexp.MustCompile(`(?i)[-_.](dvd|iso|mkv|mp4|c?avi|\d*fps|whole|(f|hhb)?hd\d*|sd\d*|(?:360|480|720|1080|2160)[pi]|X1080X|uncensored|leak|[2468]k|[xh]26[45])+`).

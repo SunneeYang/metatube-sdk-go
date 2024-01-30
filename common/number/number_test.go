@@ -54,6 +54,7 @@ func TestTrim(t *testing.T) {
 		{"FC2-PPV_123456", "FC2-123456"},
 		{"FC2-PPV-123456-C.mp4", "FC2-123456"},
 		{"FC2PPV 123456", "FC2-123456"},
+		{"[JAV] [Uncensored] FC2 PPV 123456 [720p]", "FC2-123456"},
 		{"cllshuai@www.sexinsex.net@[中文字幕]FAX-146剧场版-和大嫂偷情、迷奸、强奸等4个故事", "FAX-146"},
 		{"SHKD-474 KATAGIRI ERIRIKA 카타기리 에리리카 - FHD 1080P", "SHKD-474"},
 		{"【WRE】SHKD-474 shezhangmi", "SHKD-474"},
